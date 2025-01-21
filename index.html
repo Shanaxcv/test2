@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Tebak Angka</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #fbc2eb, #a6c1ee);
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: #fff;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            width: 400px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #6a1b9a;
+        }
+
+        p {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #6a1b9a;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #4a148c;
+        }
+
+        .result {
+            margin-top: 20px;
+            background: #e1bee7;
+            padding: 15px;
+            border-radius: 5px;
+            color: #6a1b9a;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Game Tebak Angka</h1>
+        <p>Komputer telah memilih angka rahasia dari 1 sampai 100. Bisakah Anda menebaknya?</p>
+        <input type="number" id="guess" placeholder="Masukkan tebakan Anda" min="1" max="100">
+        <button onclick="checkGuess()">Tebak</button>
+        <button onclick="restartGame()" style="background: #c62828; margin-top: 10px;">Reset</button>
+        <div id="result" class="result" style="display: none;"></div>
+    </div>
+
+    <script>
+        let secretNumber = Math.floor(Math.random() * 100) + 1;
+        let attempts = 0;
+
+        function checkGuess() {
+            const userGuess = parseInt(document.getElementById('guess').value);
+            const resultDiv = document.getElementById('result');
+
+            if (isNaN(userGuess) || userGuess < 1 || userGuess > 100) {
+                alert('Harap masukkan angka antara 1 dan 100!');
+                return;
+            }
+
+            attempts++;
+
+            if (userGuess === secretNumber) {
+                resultDiv.style.display = 'block';
+                resultDiv.innerHTML = `<p>Selamat! Anda menebak angka <strong>${secretNumber}</strong> dalam ${attempts} percobaan!</p>`;
+            } else if (userGuess < secretNumber) {
+                resultDiv.style.display = 'block';
+                resultDiv.innerHTML = `<p>Angka terlalu rendah. Coba lagi!</p>`;
+            } else {
+                resultDiv.style.display = 'block';
+                resultDiv.innerHTML = `<p>Angka terlalu tinggi. Coba lagi!</p>`;
+            }
+        }
+
+        function restartGame() {
+            secretNumber = Math.floor(Math.random() * 100) + 1;
+            attempts = 0;
+            document.getElementById('guess').value = '';
+            const resultDiv = document.getElementById('result');
+            resultDiv.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
